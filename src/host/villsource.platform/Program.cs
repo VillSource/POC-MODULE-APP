@@ -1,4 +1,5 @@
 using System.Reflection;
+using Scalar.AspNetCore;
 using villsource.platform;
 using villsource.Sdk;
 
@@ -9,9 +10,14 @@ builder.Services.AddOpenApi();
 var app = builder.Build();
 var pluginsEndpoint = app.MapGroup("plugins");
 
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 var parth = @"/home/pandora/Desktop/POC-Modular/src/modules/villsource.module.a/bin/Debug/net10.0/";
@@ -30,12 +36,12 @@ foreach (var pluginImplementation in pluginImplementations)
         Console.WriteLine($"Plugin {pluginImplementation.Name} could not be found.");
         continue;
     }
-    var pluginEndpoint = pluginsEndpoint.MapGroup(plugin.Name);
+    var pluginEndpoint = pluginsEndpoint.MapGroup(plugin.Name).WithTags(plugin.Name);
     plugin.MapEndpoints(pluginEndpoint);
 }
 
-app.MapGet("/", () => "hello");
+// app.MapGet("/", () => Results.Redirect("/scalar"));
 
 app.UseHttpsRedirection();
-
+app.MapFallbackToFile("index.html");
 app.Run();
