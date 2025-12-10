@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/host/">
+    <Project Path="src/host/villsource.platform/villsource.platform.csproj" />
+  </Folder>
+  <Folder Name="/src/kernel/">
+    <Project Path="src\kernel\villsource.Sdk\villsource.Sdk.csproj" />
+  </Folder>
+  <Folder Name="/src/modules/">
+    <Project Path="src/modules/villsource.module.a/villsource.module.a.csproj" />
+  </Folder>
+</Solution>
